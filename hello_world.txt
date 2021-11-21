@@ -1,0 +1,1 @@
+This is me learning Git and getting some of the more advanced and useful commands down 
