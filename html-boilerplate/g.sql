@@ -44,3 +44,4 @@ ELSE
 BEGIN
     PRINT 'No valid tables or columns found to search';
 END;
+
