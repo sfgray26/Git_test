@@ -31,7 +31,7 @@ END
 IF LEN(@sql) > 0
 BEGIN
     SET @unionSql = REPLACE(@sql, '-- UNION ALL will be added later' + CHAR(13) + CHAR(10), 'UNION ALL' + CHAR(13) + CHAR(10));
-    SET @unionSql = LEFT(@unionSql, LEN(@unionSql) - 10); -- Remove last UNION ALL
+    SET @unionSql = LEFT(@unionSql, LEN(@unionSql) - 11); -- Remove last UNION ALL and line break
 END
 
 -- Execute dynamic SQL
@@ -44,5 +44,3 @@ ELSE
 BEGIN
     PRINT 'No valid tables or columns found to search';
 END;
-
-
