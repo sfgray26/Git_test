@@ -1,5 +1,6 @@
 DECLARE @sql NVARCHAR(MAX);
 DECLARE @unionSql NVARCHAR(MAX);
+DECLARE @commentIndex INT;
 
 SET @sql = '';
 SET @unionSql = '';
@@ -30,8 +31,17 @@ END
 -- Build UNION ALL string
 IF LEN(@sql) > 0
 BEGIN
-    SET @unionSql = REPLACE(@sql, '-- UNION ALL will be added later' + CHAR(13) + CHAR(10), 'UNION ALL' + CHAR(13) + CHAR(10));
-    SET @unionSql = LEFT(@unionSql, LEN(@unionSql) - 11); -- Remove last UNION ALL and line break
+    SET @commentIndex = CHARINDEX('-- UNION ALL will be added later' + CHAR(13) + CHAR(10), @sql);
+
+    IF @commentIndex > 0
+    BEGIN
+        SET @unionSql = STUFF(@sql, @commentIndex, LEN('-- UNION ALL will be added later' + CHAR(13) + CHAR(10)), ' UNION ALL ' + CHAR(13) + CHAR(10));
+        SET @unionSql = LEFT(@unionSql, LEN(@unionSql) - 11); -- Remove last UNION ALL and line break
+    END
+    ELSE
+    BEGIN
+        SET @unionSql = @sql; -- If the comment is not found, use the original SQL
+    END
 END
 
 -- Execute dynamic SQL
