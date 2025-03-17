@@ -29,6 +29,7 @@ BEGIN
 END
 
 -- Build UNION ALL string
+-- Build UNION ALL string
 IF LEN(@sql) > 0
 BEGIN
     SET @commentIndex = CHARINDEX('-- UNION ALL will be added later' + CHAR(13) + CHAR(10), @sql);
